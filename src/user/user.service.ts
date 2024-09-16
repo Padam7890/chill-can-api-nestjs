@@ -19,9 +19,10 @@ export class UserService {
       throw new ConflictException('User already exists');
     }
     data.password = await hashPassword(data.password);
-    return this.prisma.user.create({
+    const savedata = await this.prisma.user.create({
       data,
     });
+    return savedata;
   }
 
   findAll(): Promise<User[]> {
@@ -34,7 +35,7 @@ export class UserService {
     }
     return this.prisma.user.findUnique({ where: { email } });
   }
-  
+
   findoneByid(id: number): Promise<User> {
     return this.prisma.user.findUnique({ where: { id } });
   }
