@@ -48,7 +48,12 @@ export class UserService {
   }
 
   findoneByid(id: number): Promise<User> {
-    return this.prisma.user.findUnique({ where: { id } });
+    return this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        role: true,
+      },
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
