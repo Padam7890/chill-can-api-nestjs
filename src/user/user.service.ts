@@ -21,6 +21,9 @@ export class UserService {
     }
     data.password = await hashPassword(data.password);
     const userRole = await this.getRoleByName(roleEnums.USER);
+    if (!userRole || !userRole.id) {
+      throw new BadRequestException('Role not found or role ID is missing');
+    }
     const savedata = await this.prisma.user.create({
       data: {
         email: data.email,
@@ -37,7 +40,11 @@ export class UserService {
   }
 
   findAll(): Promise<User[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      include: {
+        role: true,
+      },
+    });
   }
 
   findOne(email: string) {
@@ -68,8 +75,13 @@ export class UserService {
   }
 
   async getRoleByName(roleName: roleEnums): Promise<Role> {
-    return this.prisma.role.findUnique({
+    return await this.prisma.role.findUnique({
       where: { name: roleName },
+    });
+  }
+  async getRoleNameByid (id: number): Promise<Role> {
+    return await this.prisma.role.findUnique({
+      where: { id },
     });
   }
 }
