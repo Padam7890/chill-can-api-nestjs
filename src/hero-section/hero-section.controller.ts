@@ -9,6 +9,7 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { HeroSectionService } from './hero-section.service';
 import { CreateHeroSectionDto } from './dto/create-hero-section.dto';
@@ -61,8 +62,8 @@ export class HeroSectionController {
     summary: 'One Hero Section',
     responseType: UpdateHeroSectionDto,
   })
-  async findOne(@Param('id') id: string) {
-    const herosection = await this.heroSectionService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const herosection = await this.heroSectionService.findOne(id);
     return createResponse(
       HttpStatus.CREATED,
       'Hero Section Fetched Sucessfull',
@@ -79,10 +80,10 @@ export class HeroSectionController {
     includeBearerAuth: true,
   })
   async update(
-    @Param('id') id: string,
+    @Param('id',ParseIntPipe) id: number,
     @Body() updateHeroSectionDto: UpdateHeroSectionDto,
   ) {
-    const heroSection = await this.heroSectionService.update(+id, updateHeroSectionDto);
+    const heroSection = await this.heroSectionService.update(id, updateHeroSectionDto);
     return createResponse(
       HttpStatus.CREATED,
       'Hero Section updated successfully',
@@ -100,8 +101,8 @@ export class HeroSectionController {
     responseType: '',
     includeBearerAuth: true,
   })
-  async remove(@Param('id') id: string) {
-    const heroSection = await this.heroSectionService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const heroSection = await this.heroSectionService.remove(id);
     return createResponse(
       HttpStatus.CREATED,
       'Hero Section deleted successfully',
