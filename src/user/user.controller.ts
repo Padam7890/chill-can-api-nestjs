@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -48,7 +47,12 @@ export class UserController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  async remove(@Param('id') id: string) {
+   const deletedData =  await this.userService.remove(+id);
+   return {
+     statusCode: HttpStatus.OK,
+     message: 'User deleted successfully',
+     user: deletedData,
+   }
   }
 }
