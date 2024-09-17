@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,8 +8,127 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
+  id                       Int       @id @default(autoincrement())
+  name                     String
+  email                    String    @unique
+  password                 String
+  createdAt                DateTime  @default(now())
+  passwordChangedAt        DateTime?
+  passwordResetToken       String?
+  passwordResetTokenExpire DateTime?
+  role                     Role      @relation(fields: [roleId], references: [id], onDelete: Cascade) // Singular for clarity
+  roleId                   Int
+}
+
+model Role {
+  id          Int              @id @default(autoincrement())
+  name        roles  @unique          @default(USER)
+  users       User[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  permissions RolePermission[]
+}
+
+enum roles {
+  ADMIN
+  USER
+}
+
+model Permission {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique
+  roles     RolePermission[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model RolePermission {
+  id           Int        @id @default(autoincrement())
+  roleId       Int
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade) // Ensure cascading deletion
+  permissionId Int
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade) // Ensure cascading deletion
+   @@unique([roleId, permissionId])
+
+}
+
+model MainHeroSection {
+  id             Int      @id @default(autoincrement())
+  title          String
+  subTitle       String
+  heroContent    String
+  heroButtonLink String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model SecondaryHeroSection {
+  id             Int      @id @default(autoincrement())
+  title          String
+  subTitle       String
+  heroContent    String
+  heroButtonLink String?
+  heroImage      String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Skydive {
+  id        Int      @id @default(autoincrement())
+  title     String
+  flavor    Flavor   @relation(fields: [flavorId], references: [id])
+  flavorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id                 Int      @id @default(autoincrement())
+  productName        String
+  productDescription String
+  price              Float
+  flavor             Flavor   @relation(fields: [flavorId], references: [id])
+  flavorId           Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Flavor {
+  id                 Int                  @id @default(autoincrement())
+  flavorName         String               @default("blackCherry")
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  Product            Product[]
+  Skydive            Skydive[]
+  AlternatingSection AlternatingSection[]
+}
+
+model AlternatingSection {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  flavor    Flavor   @relation(fields: [flavorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  flavorId  Int
+}
+
+model NavMenu {
+  id        Int      @id @default(autoincrement())
+  menuName  String
+  menuLink  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model General {
+  id              Int      @id @default(autoincrement())
+  logoName        String
+  logoImage       String
+  metaTitle       String
+  metaDescription String?
+  metaKeywords    String?
+  favicon         String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

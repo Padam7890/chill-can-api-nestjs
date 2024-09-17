@@ -6,8 +6,9 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { DatabaseService } from 'src/database/database.service';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, Role, User } from '@prisma/client';
 import { hashPassword } from 'src/utils/hash-password';
+import { roleEnums } from './types/userTypes';
 
 @Injectable()
 export class UserService {
@@ -19,8 +20,18 @@ export class UserService {
       throw new ConflictException('User already exists');
     }
     data.password = await hashPassword(data.password);
+    const userRole = await this.getRoleByName(roleEnums.USER);
     const savedata = await this.prisma.user.create({
-      data,
+      data: {
+        email: data.email,
+        name: data.name,
+        password: data.password,
+        role: {
+          connect: {
+            id: userRole.id,
+          },
+        },
+      },
     });
     return savedata;
   }
@@ -49,5 +60,11 @@ export class UserService {
 
   remove(id: number): Promise<User> {
     return this.prisma.user.delete({ where: { id } });
+  }
+
+  async getRoleByName(roleName: roleEnums): Promise<Role> {
+    return this.prisma.role.findUnique({
+      where: { name: roleName },
+    });
   }
 }
