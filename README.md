@@ -62,29 +62,9 @@ To get started with the Chillcan Soda API, follow these steps:
 
 ## API Endpoints
 
-### Authentication
+### Swagger API Documentation
 
-- **POST** `/auth/register` - Register a new user
-- **POST** `/auth/login` - Authenticate and login
-
-### Products
-
-- **GET** `/products` - List all products
-- **GET** `/products/:id` - Get a specific product
-- **POST** `/products` - Create a new product
-- **PUT** `/products/:id` - Update an existing product
-- **DELETE** `/products/:id` - Delete a product
-
-### Orders
-
-- **GET** `/orders` - List all orders
-- **GET** `/orders/:id` - Get a specific order
-- **POST** `/orders` - Create a new order
-
-### Users
-
-- **GET** `/users` - List all users
-- **GET** `/users/:id` - Get a specific user
+`/api` 
 
 ## Setup
 
