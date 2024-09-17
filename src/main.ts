@@ -21,6 +21,7 @@ async function bootstrap() {
       scheme: 'bearer',
       bearerFormat: 'JWT',
       description: 'JWT Authorization',
+      
       in: 'header',
     }, "JWT-auth")
     .build();
