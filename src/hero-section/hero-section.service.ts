@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHeroSectionDto } from './dto/create-hero-section.dto';
 import { UpdateHeroSectionDto } from './dto/update-hero-section.dto';
+import { MainHeroSection } from '@prisma/client';
+import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class HeroSectionService {
-  create(createHeroSectionDto: CreateHeroSectionDto) {
-    return 'This action adds a new heroSection';
+  constructor(private prisma: DatabaseService) {}
+
+  async create(createHeroSectionDto: CreateHeroSectionDto):Promise<MainHeroSection> {
+    return await this.prisma.mainHeroSection.create({
+      data: createHeroSectionDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all heroSection`;
+  async findAll():Promise<MainHeroSection[]> {
+    return await this.prisma.mainHeroSection.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} heroSection`;
+  async findOne(id: number):Promise<MainHeroSection> {
+    return await this.prisma.mainHeroSection.findFirst({
+      where: { id },
+    });
   }
 
-  update(id: number, updateHeroSectionDto: UpdateHeroSectionDto) {
-    return `This action updates a #${id} heroSection`;
+  async update(id: number, updateHeroSectionDto: UpdateHeroSectionDto) {
+    return await this.prisma.mainHeroSection.update({
+      where: { id },
+      data: updateHeroSectionDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} heroSection`;
+  async remove(id: number) {
+    return await this.prisma.mainHeroSection.delete({
+      where: { id },
+    });
   }
 }
