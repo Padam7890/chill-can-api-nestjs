@@ -1,85 +1,150 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Chillcan Soda API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Welcome to the Chillcan Soda API! This API is designed for the Chillcan Soda web app, providing essential backend functionalities using NestJS. 
 
-## Description
+## Table of Contents
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [About](#about)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [API Endpoints](#api-endpoints)
+- [Setup](#setup)
+- [Running the Application](#running-the-application)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Project setup
+## About
+
+The Chillcan Soda API provides a robust backend for managing data related to the Chillcan Soda web app. Built with NestJS, it leverages modern TypeScript features and powerful libraries to deliver a high-quality API service.
+
+## Features
+
+- **User Management**: Registration, authentication, and role-based access control.
+- **Product Management**: CRUD operations for managing soda products.
+- **Order Management**: Handling customer orders and transactions.
+- **Role-Based Permissions**: Secure access to different API endpoints based on user roles.
+- **Integration with Frontend**: Seamless communication with the Chillcan Soda web app.
+
+## Getting Started
+
+To get started with the Chillcan Soda API, follow these steps:
+
+### Prerequisites
+
+- Node.js (v14 or later)
+- npm or yarn
+- A PostgreSQL database (or your preferred database)
+
+### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/Padam7890/chill-can-api-nestjs
+    cd chill-can-api-nestjs
+    ```
+
+2. Install the dependencies:
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3. Configure your environment variables. Copy the `.env.example` file to `.env` and update the values as needed:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+## API Endpoints
+
+### Authentication
+
+- **POST** `/auth/register` - Register a new user
+- **POST** `/auth/login` - Authenticate and login
+
+### Products
+
+- **GET** `/products` - List all products
+- **GET** `/products/:id` - Get a specific product
+- **POST** `/products` - Create a new product
+- **PUT** `/products/:id` - Update an existing product
+- **DELETE** `/products/:id` - Delete a product
+
+### Orders
+
+- **GET** `/orders` - List all orders
+- **GET** `/orders/:id` - Get a specific order
+- **POST** `/orders` - Create a new order
+
+### Users
+
+- **GET** `/users` - List all users
+- **GET** `/users/:id` - Get a specific user
+
+## Setup
+
+1. **Database Setup**
+
+    Ensure your database is set up and accessible. Update your `.env` file with the database connection details.
+
+2. **Migration**
+
+    Apply the database migrations to set up the schema:
+
+    ```bash
+    npx prisma migrate dev
+    ```
+
+## Running the Application
+
+To start the application in development mode:
 
 ```bash
-$ npm install
+npm run start:dev
+# or
+yarn start:dev
 ```
 
-## Compile and run the project
+To build the application for production:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run build
+# or
+yarn build
 ```
 
-## Run tests
+Then, start the application:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start
+# or
+yarn start
 ```
 
-## Resources
+## Testing
 
-Check out a few resources that may come in handy when working with NestJS:
+Run the unit and e2e tests:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+npm run test
+# or
+yarn test
+```
 
-## Support
+## Contributing
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+We welcome contributions! If you have suggestions or improvements, please follow these steps:
 
-## Stay in touch
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/YourFeature`)
+3. Make your changes
+4. Commit your changes (`git commit -am 'Add new feature'`)
+5. Push to the branch (`git push origin feature/YourFeature`)
+6. Create a new Pull Request
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+BY Padam Thapa: https://padamthapa.com.np/
