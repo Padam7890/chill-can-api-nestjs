@@ -33,7 +33,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config); 
   SwaggerModule.setup('api/docs', app, document,{
-    jsonDocumentUrl: "swagger/json",
+    jsonDocumentUrl: "api/docs/json",
   });
   await app.listen(3001);
 }
