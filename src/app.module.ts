@@ -7,9 +7,15 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { HeroSectionModule } from './hero-section/hero-section.module';
 import { RouterModule } from '@nestjs/core';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'), 
+    }),
+
     DatabaseModule,
     ConfigModule.forRoot({
       isGlobal: true,
