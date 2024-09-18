@@ -46,5 +46,4 @@ export class AuthService {
     return { access_token };
   }
 
-  private async 
 }

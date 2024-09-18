@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { Prisma, Role, User } from '@prisma/client';
-import { hashPassword } from 'src/utils/hash-password';
+import { hashPassword } from '../utils/hash-password';
 import { roleEnums } from './types/userTypes';
 
 @Injectable()
