@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateHeroSectionDto } from './dto/create-hero-section.dto';
 import { UpdateHeroSectionDto } from './dto/update-hero-section.dto';
 import { MainHeroSection } from '@prisma/client';
-import { DatabaseModule } from 'src/database/database.module';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseModule } from '../database/database.module';
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class HeroSectionService {

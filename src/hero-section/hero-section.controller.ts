@@ -14,11 +14,11 @@ import {
 import { HeroSectionService } from './hero-section.service';
 import { CreateHeroSectionDto } from './dto/create-hero-section.dto';
 import { UpdateHeroSectionDto } from './dto/update-hero-section.dto';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { RoleGuard } from 'src/auth/guards/role.guard';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { RoleGuard } from '../auth/guards/role.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { UniversalDecorator } from 'src/common/decorators/universal.decorator';
-import { createResponse } from 'src/helper/response.helper';
+import { UniversalDecorator } from '../common/decorators/universal.decorator';
+import { createResponse } from '../helper/response.helper';
 
 @Controller('hero-section')
 @ApiTags('Hero Section')
