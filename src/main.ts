@@ -32,7 +32,9 @@ async function bootstrap() {
     }, "JWT-auth")
     .build();
   const document = SwaggerModule.createDocument(app, config); 
-  SwaggerModule.setup('api/api/docs', app, document);
+  SwaggerModule.setup('api/docs', app, document,{
+    jsonDocumentUrl: "swagger/json",
+  });
   await app.listen(3001);
 }
 bootstrap();
