@@ -28,7 +28,7 @@ export class HeroSectionController {
   @Post()
   @UniversalDecorator({
     guards: [AuthGuard, RoleGuard],
-    role: 'ADMIN',
+    role: 'USER',
     summary: 'Form Hero Section',
     responseType: UpdateHeroSectionDto,
     includeBearerAuth: true,

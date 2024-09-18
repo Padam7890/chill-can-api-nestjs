@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { HeroSectionModule } from './hero-section/hero-section.module';
+import { RouterModule } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { HeroSectionModule } from './hero-section/hero-section.module';
     }),
     UserModule,
     AuthModule,
-    HeroSectionModule
+    HeroSectionModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
