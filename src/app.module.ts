@@ -9,6 +9,7 @@ import { HeroSectionModule } from './main-hero-section/hero-section.module';
 import { RouterModule } from '@nestjs/core';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { SecondHeroSectionModule } from './second-hero-section/second-hero-section.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { join } from 'path';
     UserModule,
     AuthModule,
     HeroSectionModule,
+    SecondHeroSectionModule,
 
   ],
   controllers: [AppController],
