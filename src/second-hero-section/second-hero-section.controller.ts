@@ -15,8 +15,6 @@ import { CreateSecondHeroSectionDto } from './dto/create-second-hero-section.dto
 import { UpdateSecondHeroSectionDto } from './dto/update-second-hero-section.dto';
 import { createResponse } from 'src/helper/response.helper';
 import { UniversalDecorator } from 'src/common/decorators/universal.decorator';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { RoleGuard } from 'src/auth/guards/role.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -29,7 +27,6 @@ export class SecondHeroSectionController {
 
   @Post()
   @UniversalDecorator({
-    guards: [AuthGuard, RoleGuard],
     role: 'USER',
     summary: 'Form Second Hero Section',
     responseType: CreateSecondHeroSectionDto,
@@ -85,7 +82,6 @@ export class SecondHeroSectionController {
 
   @Patch(':id')
   @UniversalDecorator({
-    guards: [AuthGuard, RoleGuard],
     role: 'USER',
     summary: 'Update Form Second Hero Section',
     responseType: CreateSecondHeroSectionDto,
@@ -116,7 +112,6 @@ export class SecondHeroSectionController {
 
   @Delete(':id')
   @UniversalDecorator({
-    guards: [AuthGuard, RoleGuard],
     role: 'USER',
     summary: ' Second Hero Section Delete',
     responseType: CreateSecondHeroSectionDto,

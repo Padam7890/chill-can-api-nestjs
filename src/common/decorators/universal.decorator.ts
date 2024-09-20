@@ -1,9 +1,8 @@
-// src/common/decorators/universal.decorator.ts
-
-import { applyDecorators, CanActivate, SetMetadata, UseGuards } from '@nestjs/common';
+import { applyDecorators, CanActivate, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Roles } from './roles.decorator';
 import { Permissions } from './permissions.decorator';
+import { Auth } from './auth.decorator';
 
 interface UniversalDecoratorOptions {
   role?: string;          // Optional role
@@ -22,7 +21,6 @@ export function UniversalDecorator({
   includeBearerAuth = false,
   guards = [], // Default to empty array
 }: UniversalDecoratorOptions) {
-  // Create an array to hold decorators conditionally
   const decorators = [];
 
   // Add ApiBearerAuth if specified
@@ -38,7 +36,7 @@ export function UniversalDecorator({
 
   // Add Roles decorator if specified
   if (role) {
-    decorators.push(Roles(role));
+    decorators.push(Auth(role));
   }
 
   // Add Permissions decorator if specified
@@ -46,7 +44,7 @@ export function UniversalDecorator({
     decorators.push(Permissions(...permissions));
   }
 
-  // Add guards if specified
+  // Add custom guards if specified
   if (guards.length > 0) {
     decorators.push(UseGuards(...guards));
   }

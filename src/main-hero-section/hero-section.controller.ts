@@ -27,7 +27,6 @@ export class HeroSectionController {
 
   @Post()
   @UniversalDecorator({
-    guards: [AuthGuard, RoleGuard],
     role: 'USER',
     summary: 'Form Hero Section',
     responseType: UpdateHeroSectionDto,
@@ -45,6 +44,7 @@ export class HeroSectionController {
 
   @Get()
   @UniversalDecorator({
+    role:'ADMIN',
     summary: 'Get Hero Section',
     responseType: UpdateHeroSectionDto,
   })
@@ -52,7 +52,7 @@ export class HeroSectionController {
     const heroSection = await this.heroSectionService.findAll();
     return createResponse(
       HttpStatus.CREATED,
-      'Hero Section Fetched Sucessfull',
+      'Hero Section Fetched',
       heroSection,
     );
   }
@@ -73,7 +73,6 @@ export class HeroSectionController {
 
   @Patch(':id')
   @UniversalDecorator({
-    guards: [AuthGuard, RoleGuard],
     role: 'ADMIN',
     summary: 'Form Hero Section Update',
     responseType: UpdateHeroSectionDto,
@@ -92,13 +91,11 @@ export class HeroSectionController {
   }
 
 
-
   @Delete(':id')
   @UniversalDecorator({
-    guards: [AuthGuard, RoleGuard],
-    role: 'ADMIN',
+    role: 'USER',
     summary: 'Form Hero Section Delete',
-    responseType: '',
+    responseType: CreateHeroSectionDto,
     includeBearerAuth: true,
   })
   async remove(@Param('id', ParseIntPipe) id: number) {
