@@ -22,7 +22,6 @@ async function bootstrap() {
     .setTitle('Soda Can APi Service')
     .setDescription('Soda Can APi  documentation')
     .setVersion('1.0')
-    .addServer("https://chill-can-api-nestjs.vercel.app/", 'Production' )
     .addBearerAuth({
       type: 'http',
       scheme: 'bearer',

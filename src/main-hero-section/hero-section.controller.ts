@@ -44,7 +44,6 @@ export class HeroSectionController {
 
   @Get()
   @UniversalDecorator({
-    role:'ADMIN',
     summary: 'Get Hero Section',
     responseType: UpdateHeroSectionDto,
   })
