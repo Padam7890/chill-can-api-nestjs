@@ -1,10 +1,9 @@
 import { Injectable, ParseIntPipe } from '@nestjs/common';
 import { CreateSecondHeroSectionDto } from './dto/create-second-hero-section.dto';
 import { UpdateSecondHeroSectionDto } from './dto/update-second-hero-section.dto';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../../database/database.service';
 import { SecondaryHeroSection } from '@prisma/client';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
-import { UploadApiResponse } from 'cloudinary';
+import { CloudinaryService } from '../../lib/cloudinary/cloudinary.service';
 
 @Injectable()
 export class SecondHeroSectionService {
@@ -46,11 +45,12 @@ export class SecondHeroSectionService {
       where: { id },
     });
   }
-  async uploadImageToCloudinary(file: Express.Multer.File){
-    const cloudinaryService =  await this.cloudinaryService.uploadImage(file).catch(()=> {
-      throw new Error("Failed to upload image to cloudinary");
-    })
+  async uploadImageToCloudinary(file: Express.Multer.File) {
+    const cloudinaryService = await this.cloudinaryService
+      .uploadImage(file)
+      .catch(() => {
+        throw new Error('Failed to upload image to cloudinary');
+      });
     return cloudinaryService.secure_url;
-
   }
 }

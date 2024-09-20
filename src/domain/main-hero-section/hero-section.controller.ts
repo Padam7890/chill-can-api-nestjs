@@ -14,11 +14,11 @@ import {
 import { HeroSectionService } from './hero-section.service';
 import { CreateHeroSectionDto } from './dto/create-hero-section.dto';
 import { UpdateHeroSectionDto } from './dto/update-hero-section.dto';
-import { AuthGuard } from '../auth/guards/auth.guard';
-import { RoleGuard } from '../auth/guards/role.guard';
+
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { UniversalDecorator } from '../common/decorators/universal.decorator';
-import { createResponse } from '../helper/response.helper';
+import { UniversalDecorator } from '../../common/decorators/universal.decorator';
+import { createResponse } from '../../helper/response.helper';
+import { Response } from 'express';
 
 @Controller('hero-section')
 @ApiTags('Hero Section')
@@ -47,7 +47,7 @@ export class HeroSectionController {
     summary: 'Get Hero Section',
     responseType: UpdateHeroSectionDto,
   })
-  async findAll() {
+  async findAll(context: Response) {
     const heroSection = await this.heroSectionService.findAll();
     return createResponse(
       HttpStatus.CREATED,
@@ -78,17 +78,19 @@ export class HeroSectionController {
     includeBearerAuth: true,
   })
   async update(
-    @Param('id',ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateHeroSectionDto: UpdateHeroSectionDto,
   ) {
-    const heroSection = await this.heroSectionService.update(id, updateHeroSectionDto);
+    const heroSection = await this.heroSectionService.update(
+      id,
+      updateHeroSectionDto,
+    );
     return createResponse(
       HttpStatus.CREATED,
       'Hero Section updated successfully',
       heroSection,
     );
   }
-
 
   @Delete(':id')
   @UniversalDecorator({

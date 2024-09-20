@@ -13,8 +13,8 @@ import {
 import { SecondHeroSectionService } from './second-hero-section.service';
 import { CreateSecondHeroSectionDto } from './dto/create-second-hero-section.dto';
 import { UpdateSecondHeroSectionDto } from './dto/update-second-hero-section.dto';
-import { createResponse } from 'src/helper/response.helper';
-import { UniversalDecorator } from 'src/common/decorators/universal.decorator';
+import { createResponse } from '../../helper/response.helper';
+import { UniversalDecorator } from '../../common/decorators/universal.decorator';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
