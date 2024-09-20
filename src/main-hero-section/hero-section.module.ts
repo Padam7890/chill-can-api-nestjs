@@ -6,9 +6,10 @@ import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { DatabaseModule } from 'src/database/database.module';
 import { DatabaseService } from 'src/database/database.service';
+import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 
 @Module({
-  imports:[DatabaseModule, UserModule, AuthModule],
+  imports:[DatabaseModule, UserModule, AuthModule, CloudinaryModule],
   controllers: [HeroSectionController],
   providers: [HeroSectionService, AuthGuard],
   exports: [HeroSectionService],

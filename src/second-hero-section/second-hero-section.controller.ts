@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { SecondHeroSectionService } from './second-hero-section.service';
 import { CreateSecondHeroSectionDto } from './dto/create-second-hero-section.dto';
@@ -15,9 +17,11 @@ import { createResponse } from 'src/helper/response.helper';
 import { UniversalDecorator } from 'src/common/decorators/universal.decorator';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RoleGuard } from 'src/auth/guards/role.guard';
-
+import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('second-hero-section')
+@ApiTags('Second hero section')
 export class SecondHeroSectionController {
   constructor(
     private readonly secondHeroSectionService: SecondHeroSectionService,
@@ -31,11 +35,24 @@ export class SecondHeroSectionController {
     responseType: CreateSecondHeroSectionDto,
     includeBearerAuth: true,
   })
+  @UseInterceptors(FileInterceptor('heroImage'))
+  async create(
+    @Body() createSecondHeroSectionDto: CreateSecondHeroSectionDto,
+    @UploadedFile() heroImage: Express.Multer.File,
+  ) {
+    if (!heroImage) {
+      return createResponse(HttpStatus.BAD_REQUEST, 'Hero image is required');
+    }
 
-  async create(@Body() createSecondHeroSectionDto: CreateSecondHeroSectionDto) {
-    const secondHeroSection = await this.secondHeroSectionService.create(
-      createSecondHeroSectionDto,
-    );
+    const uploadedImageUrl: string =
+      await this.secondHeroSectionService.uploadImageToCloudinary(heroImage);
+    console.log(uploadedImageUrl);
+
+    const secondHeroSection = await this.secondHeroSectionService.create({
+      ...createSecondHeroSectionDto,
+      heroImage: uploadedImageUrl,
+    });
+
     return createResponse(
       HttpStatus.CREATED,
       'second hero section created successfully',
@@ -74,13 +91,26 @@ export class SecondHeroSectionController {
     responseType: CreateSecondHeroSectionDto,
     includeBearerAuth: true,
   })
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateSecondHeroSectionDto: UpdateSecondHeroSectionDto,
+    @UploadedFile() heroImage: Express.Multer.File,
   ) {
-    return this.secondHeroSectionService.update(
+    if (!heroImage) {
+      return createResponse(HttpStatus.BAD_REQUEST, 'Hero image is required');
+    }
+
+    const uploadedImageUrl: string =
+      await this.secondHeroSectionService.uploadImageToCloudinary(heroImage);
+    updateSecondHeroSectionDto.heroImage = uploadedImageUrl;
+    const updateSecondHeroSec = this.secondHeroSectionService.update(
       +id,
       updateSecondHeroSectionDto,
+    );
+    return createResponse(
+      HttpStatus.OK,
+      'Second hero section updated successfully',
+      updateSecondHeroSec,
     );
   }
 

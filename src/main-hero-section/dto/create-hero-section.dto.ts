@@ -29,4 +29,5 @@ export class CreateHeroSectionDto {
     @IsNotEmpty()
     heroButtonLink: string;
 
+
 }

@@ -3,10 +3,15 @@ import { CreateSecondHeroSectionDto } from './dto/create-second-hero-section.dto
 import { UpdateSecondHeroSectionDto } from './dto/update-second-hero-section.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { SecondaryHeroSection } from '@prisma/client';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { UploadApiResponse } from 'cloudinary';
 
 @Injectable()
 export class SecondHeroSectionService {
-  constructor(private readonly prisma: DatabaseService) {}
+  constructor(
+    private readonly prisma: DatabaseService,
+    private cloudinaryService: CloudinaryService,
+  ) {}
 
   async create(
     createSecondHeroSectionDto: CreateSecondHeroSectionDto,
@@ -40,5 +45,12 @@ export class SecondHeroSectionService {
     return await this.prisma.secondaryHeroSection.delete({
       where: { id },
     });
+  }
+  async uploadImageToCloudinary(file: Express.Multer.File){
+    const cloudinaryService =  await this.cloudinaryService.uploadImage(file).catch(()=> {
+      throw new Error("Failed to upload image to cloudinary");
+    })
+    return cloudinaryService.secure_url;
+
   }
 }

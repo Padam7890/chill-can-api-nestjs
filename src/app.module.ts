@@ -10,6 +10,8 @@ import { RouterModule } from '@nestjs/core';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { SecondHeroSectionModule } from './second-hero-section/second-hero-section.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { CloudinaryService } from './cloudinary/cloudinary.service';
 
 @Module({
   imports: [
@@ -26,9 +28,10 @@ import { SecondHeroSectionModule } from './second-hero-section/second-hero-secti
     AuthModule,
     HeroSectionModule,
     SecondHeroSectionModule,
+    CloudinaryModule,
 
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CloudinaryService],
 })
 export class AppModule {}
