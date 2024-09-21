@@ -47,6 +47,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     } else {
       myResponseObj.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
       myResponseObj.message = 'Internal Server Error';
+      console.error('Exception:', exception);
     }
 
     if (response && typeof response.status === 'function') {
