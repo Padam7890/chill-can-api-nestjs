@@ -4,11 +4,11 @@ import { AuthController } from './auth.controller';
 import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 // import { AuthGuard } from '../../core/guards/auth.guard';
-import jwtConfig from 'src/core/config/jwt.config';
+import jwtConfig from '../../core/config/jwt.config';
 import { ConfigModule } from '@nestjs/config';
-import refreshJwtConfig from 'src/core/config/refresh-jwt-config';
-import { RefreshJwtStrategy } from 'src/core/startegies/refresh.startegy';
-import { JwtStrategy } from 'src/core/startegies/jwt.startegy';
+import refreshJwtConfig from '../../core/config/refresh-jwt-config';
+import { RefreshJwtStrategy } from '../../core/startegies/refresh.startegy';
+import { JwtStrategy } from '../../core/startegies/jwt.startegy';
 
 @Module({
   imports: [

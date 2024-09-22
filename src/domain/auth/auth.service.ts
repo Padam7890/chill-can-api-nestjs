@@ -5,8 +5,8 @@ import { signInDTO } from './dto/auth';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import refreshJwtConfig from 'src/core/config/refresh-jwt-config';
-import jwtConfig from 'src/core/config/jwt.config';
+import refreshJwtConfig from '../../core/config/refresh-jwt-config';
+import jwtConfig from '../../core/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 
 @Injectable()
