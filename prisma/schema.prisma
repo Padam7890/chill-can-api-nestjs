@@ -22,7 +22,7 @@ model User {
 
 model Role {
   id          Int              @id @default(autoincrement())
-  name        roles  @unique          @default(USER)
+  name        roles            @unique @default(USER)
   users       User[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
@@ -48,8 +48,8 @@ model RolePermission {
   role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade) // Ensure cascading deletion
   permissionId Int
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade) // Ensure cascading deletion
-   @@unique([roleId, permissionId])
 
+  @@unique([roleId, permissionId])
 }
 
 model MainHeroSection {

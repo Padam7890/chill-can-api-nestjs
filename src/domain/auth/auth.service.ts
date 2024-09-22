@@ -1,7 +1,6 @@
 import { HttpStatus, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
-import { signInDTO } from './dto/auth';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../user/dto/create-user.dto';
@@ -18,25 +17,6 @@ export class AuthService {
     @Inject(jwtConfig.KEY) private accessTokenConfig: ConfigType<typeof jwtConfig> // Added accessTokenConfig injection
   ) {}
 
-  async signIn(sigIn: signInDTO): Promise<any> {
-    const user = await this.userService.findOne(sigIn.email);
-    if (!user) {
-      throw new UnauthorizedException(`User ${sigIn.email} not found`);
-    }
-    const isMatch = await bcrypt.compare(sigIn.password, user.password);
-    if (!isMatch) {
-      throw new UnauthorizedException('Invalid Password');
-    }
-    const token = await this.createToken(user);
-    const refresh_token = await this.createRefreshToken(user);
-    return {
-      message: "User SignIn Successfully",
-      access_token: token.access_token,
-      refresh_token: refresh_token.refreshToken,
-      user: user,
-    };
-  }
-
   async signUp(data: CreateUserDto): Promise<any> {
     const user = await this.userService.create(data);
     const token = await this.createToken(user);
@@ -51,17 +31,52 @@ export class AuthService {
     };
   }
 
-  // Generate access token using jwtConfig
+
+  async validateUser(email: string, password: string) {
+    const user = await this.userService.findByEmail(email);
+    if (!user) throw new UnauthorizedException('User not found!');
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch)
+      throw new UnauthorizedException('Invalid credentials');
+
+    return user;
+  }
+
+  async login(user: User) {
+    const token = await this.createToken(user);
+    const refresh_token = await this.createRefreshToken(user);
+    return {
+      message: "User SignIn Successfully",
+      access_token: token.access_token,
+      refresh_token: refresh_token.refreshToken,
+      user: user,
+    };
+  }
+  
+ 
   private async createToken(user: User): Promise<{ access_token: string }> {
     const payload = { sub: user.id, email: user.email };
     const access_token = await this.jwtService.signAsync(payload, this.accessTokenConfig);
     return { access_token };
   }
 
-  // Generate refresh token using refreshJwtConfig
   async createRefreshToken(user: User): Promise<{ refreshToken: string }> {
     const payload = { sub: user.id, email: user.email };
     const refreshToken = await this.jwtService.signAsync(payload, this.refreshTokenConfig);
     return { refreshToken };
+  }
+
+  async validateGoogleUser(googleUser:CreateUserDto):Promise<User>{
+    console.log("email:" + googleUser.email)
+    if (!googleUser.email) {
+      console.error('No email provided');
+      throw new Error('Please provide a valid email');
+    }
+    const user = await this.userService.findByEmail(googleUser.email);
+    console.log(user);
+    if (user) return user;
+    const createUser = await this.userService.create(googleUser);
+    console.log(createUser);
+    return createUser
   }
 }

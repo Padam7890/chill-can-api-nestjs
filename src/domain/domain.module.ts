@@ -4,10 +4,11 @@ import { HeroSectionModule } from "./main-hero-section/hero-section.module";
 import { SecondHeroSectionModule } from "./second-hero-section/second-hero-section.module";
 import { UserModule } from "./user/user.module";
 import { AuthModule } from "./auth/auth.module";
+import { SkydiveModule } from './skydive/skydive.module';
 
 
 @Module({
-  imports: [HeroSectionModule, SecondHeroSectionModule, UserModule, AuthModule],
+  imports: [HeroSectionModule, SecondHeroSectionModule, UserModule, AuthModule, SkydiveModule],
   controllers: [],
   providers: [],
 })

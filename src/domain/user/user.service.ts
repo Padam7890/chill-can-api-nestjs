@@ -47,12 +47,17 @@ export class UserService {
     });
   }
 
-  findOne(email: string) {
+  async findOne(email: string) {
     if (!email) {
-      throw new BadRequestException('Please provide a valid email');
+      throw new BadRequestException('Please provide a valid email address');
     }
-    return this.prisma.user.findUnique({ where: { email } });
+    return await this.prisma.user.findUnique({ where: { email } });
   }
+
+  async findByEmail(email: string) {
+    return await this.prisma.user.findUnique({ where: { email } });
+  }
+
 
   findoneByid(id: number): Promise<User> {
     return this.prisma.user.findUnique({
