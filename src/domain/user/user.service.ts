@@ -8,7 +8,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { DatabaseService } from '../../database/database.service';
 import { Prisma, Role, User } from '@prisma/client';
 import { hashPassword } from '../../utils/hash-password';
-import { roleEnums } from '../../core/interfaces/userTypes';
+import { roleEnums } from '../../core/interfaces/types';
 
 @Injectable()
 export class UserService {

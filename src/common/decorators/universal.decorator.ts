@@ -1,14 +1,20 @@
 import { applyDecorators, CanActivate, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { Roles } from './roles.decorator';
 import { Permissions } from './permissions.decorator';
 import { Auth } from './auth.decorator';
 
 interface UniversalDecoratorOptions {
-  role?: string;          // Optional role
+  role?: string; // Optional role
   permissions?: string[]; // Optional permissions
   summary: string;
   responseType: any;
+  body?: any; //
   includeBearerAuth?: boolean; // Optional API Bearer Auth
   guards?: any; // Optional guards
 }
@@ -19,6 +25,7 @@ export function UniversalDecorator({
   summary,
   responseType,
   includeBearerAuth = false,
+  body,
   guards = [], // Default to empty array
 }: UniversalDecoratorOptions) {
   const decorators = [];
@@ -33,6 +40,17 @@ export function UniversalDecorator({
     ApiOperation({ summary }),
     ApiResponse({ type: responseType }),
   );
+
+  if (body) {
+    decorators.push(
+      ApiBody({
+        schema: {
+          type: 'object',
+          properties: body,
+        },
+      }),
+    );
+  }
 
   // Add Roles decorator if specified
   if (role) {

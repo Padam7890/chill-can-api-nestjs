@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   // Generate refresh token using refreshJwtConfig
-  private async createRefreshToken(user: User): Promise<{ refreshToken: string }> {
+  async createRefreshToken(user: User): Promise<{ refreshToken: string }> {
     const payload = { sub: user.id, email: user.email };
     const refreshToken = await this.jwtService.signAsync(payload, this.refreshTokenConfig);
     return { refreshToken };
