@@ -5,7 +5,6 @@ import {
   ApiOperation,
   ApiResponse,
 } from '@nestjs/swagger';
-import { Roles } from './roles.decorator';
 import { Permissions } from './permissions.decorator';
 import { Auth } from './auth.decorator';
 

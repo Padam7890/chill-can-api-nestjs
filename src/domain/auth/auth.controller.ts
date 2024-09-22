@@ -4,8 +4,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { signInDTO } from './dto/auth';
 import { UniversalDecorator } from '../../common/decorators/universal.decorator';
-import { RefreshAuthGuard } from 'src/core/guards/refresh-auth.guard';
-import { JwtAuthGuard } from 'src/core/guards/auth.guard';
+import { RefreshAuthGuard } from '../../core/guards/refresh-auth.guard';
+
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -49,7 +49,7 @@ export class AuthController {
     includeBearerAuth:true
   })
 
-  
+
   @UseGuards(RefreshAuthGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)

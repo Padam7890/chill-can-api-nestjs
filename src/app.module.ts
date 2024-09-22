@@ -11,10 +11,6 @@ import { DomainModule } from './domain/domain.module';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-    }),
-
     DatabaseModule,
     ConfigModule.forRoot({
       isGlobal: true,
