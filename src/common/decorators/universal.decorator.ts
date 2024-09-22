@@ -26,16 +26,14 @@ export function UniversalDecorator({
   responseType,
   includeBearerAuth = false,
   body,
-  guards = [], // Default to empty array
+  guards = [], 
 }: UniversalDecoratorOptions) {
   const decorators = [];
 
-  // Add ApiBearerAuth if specified
   if (includeBearerAuth) {
     decorators.push(ApiBearerAuth('JWT-auth'));
   }
 
-  // Add ApiOperation and ApiResponse decorators
   decorators.push(
     ApiOperation({ summary }),
     ApiResponse({ type: responseType }),
@@ -52,21 +50,17 @@ export function UniversalDecorator({
     );
   }
 
-  // Add Roles decorator if specified
   if (role) {
     decorators.push(Auth(role));
   }
 
-  // Add Permissions decorator if specified
   if (permissions) {
     decorators.push(Permissions(...permissions));
   }
 
-  // Add custom guards if specified
   if (guards.length > 0) {
     decorators.push(UseGuards(...guards));
   }
 
-  // Apply all decorators
   return applyDecorators(...decorators);
 }
