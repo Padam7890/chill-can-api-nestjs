@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { FlavorService } from './flavor.service';
 import { CreateFlavorDto } from './dto/create-flavor.dto';
 import { UpdateFlavorDto } from './dto/update-flavor.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('flavor')
+@ApiTags("Flavor")
 export class FlavorController {
   constructor(private readonly flavorService: FlavorService) {}
 

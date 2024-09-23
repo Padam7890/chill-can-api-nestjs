@@ -14,27 +14,31 @@ export class SkydiveService {
     const flavor = await this.flavorService.checkFlavor(
       createSkydiveDto.flavorName,
     );
-
     const skydive = await this.prisma.skydive.create({
       data: {
         title: createSkydiveDto.title,
-        flavor: {
-          connectOrCreate: {
-            where: {
-              id: flavor.id,
+        flavor: flavor
+          ? {
+              connect: {
+                id: flavor.id,
+              },
+            }
+          : {
+              create: {
+                flavorName: createSkydiveDto.flavorName,
+              },
             },
-            create: {
-              flavorName: createSkydiveDto.flavorName,
-            },
-          },
-        },
       },
     });
     return skydive;
   }
 
   async findAll() {
-    return await this.prisma.skydive.findMany();
+    return await this.prisma.skydive.findMany({
+      include: {
+        flavor: true,
+      },
+    });
   }
 
   async findOne(id: number) {

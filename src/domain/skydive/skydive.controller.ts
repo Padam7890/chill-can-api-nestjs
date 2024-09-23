@@ -4,7 +4,7 @@ import { CreateSkydiveDto } from './dto/create-skydive.dto';
 import { UpdateSkydiveDto } from './dto/update-skydive.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { createResponse } from '../../helper/response.helper';
-import { UniversalDecorator } from 'src/common/decorators/universal.decorator';
+import { UniversalDecorator } from '../../common/decorators/universal.decorator';
 
 @Controller('skydive')
 @ApiTags("Sky Dive")
