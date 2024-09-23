@@ -10,8 +10,8 @@ export class SkydiveController {
   constructor(private readonly skydiveService: SkydiveService) {}
 
   @Post()
-  create(@Body() createSkydiveDto: CreateSkydiveDto) {
-    return this.skydiveService.create(createSkydiveDto);
+  async create(@Body() createSkydiveDto: CreateSkydiveDto) {
+    return  await this.skydiveService.create(createSkydiveDto);
   }
 
   @Get()

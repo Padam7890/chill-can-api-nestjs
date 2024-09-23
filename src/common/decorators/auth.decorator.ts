@@ -11,3 +11,6 @@ export function Auth(role: string) {
     ApiBearerAuth(),
   );
 }
+
+// get prime number
+

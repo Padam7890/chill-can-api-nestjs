@@ -5,10 +5,11 @@ import { SecondHeroSectionModule } from "./second-hero-section/second-hero-secti
 import { UserModule } from "./user/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { SkydiveModule } from './skydive/skydive.module';
+import { FlavorModule } from './flavor/flavor.module';
 
 
 @Module({
-  imports: [HeroSectionModule, SecondHeroSectionModule, UserModule, AuthModule, SkydiveModule],
+  imports: [HeroSectionModule, SecondHeroSectionModule, UserModule, AuthModule, SkydiveModule, FlavorModule],
   controllers: [],
   providers: [],
 })

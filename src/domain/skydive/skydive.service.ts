@@ -1,26 +1,101 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSkydiveDto } from './dto/create-skydive.dto';
 import { UpdateSkydiveDto } from './dto/update-skydive.dto';
+import { DatabaseService } from 'src/database/database.service';
+import { Flavor } from '@prisma/client';
+import { FlavorService } from '../flavor/flavor.service';
 
 @Injectable()
 export class SkydiveService {
-  create(createSkydiveDto: CreateSkydiveDto) {
-    return 'This action adds a new skydive';
+  constructor(
+    private readonly prisma: DatabaseService,
+    private readonly flavorService: FlavorService,
+  ) {}
+  async create(createSkydiveDto: CreateSkydiveDto) {
+    const flavor = await this.flavorService.checkFlavor(
+      createSkydiveDto.flavorName,
+    );
+
+    const skydive = await this.prisma.skydive.create({
+      data: {
+        title: createSkydiveDto.title,
+        flavor: {
+          connectOrCreate: {
+            where: {
+              id: flavor.id,
+            },
+            create: {
+              flavorName: createSkydiveDto.flavorName,
+            },
+          },
+        },
+      },
+    });
+    return skydive;
   }
 
-  findAll() {
-    return `This action returns all skydive`;
+  async findAll() {
+    return await this.prisma.skydive.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} skydive`;
+  async findOne(id: number) {
+    const skydive = await this.prisma.skydive.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        flavor: true,
+      },
+    });
+    if (!skydive) {
+      throw new NotFoundException('SkyDive not found');
+    }
+    return skydive;
   }
 
-  update(id: number, updateSkydiveDto: UpdateSkydiveDto) {
-    return `This action updates a #${id} skydive`;
+  async update(id: number, updateSkydiveDto: UpdateSkydiveDto) {
+    const skydive = await this.prisma.skydive.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!skydive) {
+      throw new NotFoundException('SkyDive not found');
+    }
+    const flavor = await this.flavorService.checkFlavor(
+      updateSkydiveDto.flavorName,
+    );
+    if (!flavor) {
+      throw new NotFoundException('Flavor not found');
+    }
+
+    const updatedSkydive = await this.prisma.skydive.update({
+      where: {
+        id,
+      },
+      data: {
+        title: updateSkydiveDto.title,
+        flavor: {
+          connect: {
+            id: flavor.id,
+          },
+        },
+      },
+    });
+    return updatedSkydive;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} skydive`;
+  async remove(id: number) {
+    const skydive = await this.prisma.skydive.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!skydive) {
+      throw new NotFoundException('SkyDive not found');
+    }
+    return await this.prisma.skydive.delete({
+      where: { id },
+    });
   }
 }
