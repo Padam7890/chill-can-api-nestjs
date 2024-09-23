@@ -14,7 +14,7 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
     @Inject(refreshJwtConfig.KEY) private refreshTokenConfig: ConfigType<typeof refreshJwtConfig>,
-    @Inject(jwtConfig.KEY) private accessTokenConfig: ConfigType<typeof jwtConfig> // Added accessTokenConfig injection
+    @Inject(jwtConfig.KEY) private accessTokenConfig: ConfigType<typeof jwtConfig> 
   ) {}
 
   async signUp(data: CreateUserDto): Promise<any> {

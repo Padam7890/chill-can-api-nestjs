@@ -16,15 +16,15 @@ import { LocalStrategy } from '../../core/startegies/local.startegy';
 
 @Module({
   imports: [
-    UserModule, // Import UserModule for UserService
-    JwtModule.registerAsync(jwtConfig.asProvider()), // Async config for JWT
-    ConfigModule.forFeature(jwtConfig), // Feature for JWT config
-    ConfigModule.forFeature(refreshJwtConfig), // Feature for refresh JWT config
+    UserModule, 
+    JwtModule.registerAsync(jwtConfig.asProvider()), 
+    ConfigModule.forFeature(jwtConfig), 
+    ConfigModule.forFeature(refreshJwtConfig), 
     ConfigModule.forFeature(googleOauthConfig)
 
   ],
   exports: [AuthService, JwtModule], 
   controllers: [AuthController],
-  providers: [AuthService,LocalStrategy, JwtStrategy, RefreshJwtStrategy, GoogleStartegy], // Include AuthGuard if needed
+  providers: [AuthService, LocalStrategy, JwtStrategy, RefreshJwtStrategy, GoogleStartegy], 
 })
 export class AuthModule {}

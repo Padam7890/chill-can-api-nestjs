@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SkydiveService } from './skydive.service';
 import { CreateSkydiveDto } from './dto/create-skydive.dto';
 import { UpdateSkydiveDto } from './dto/update-skydive.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('skydive')
+@ApiTags("Sky Dive")
 export class SkydiveController {
   constructor(private readonly skydiveService: SkydiveService) {}
 
