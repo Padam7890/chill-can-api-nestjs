@@ -35,18 +35,34 @@ export class SkydiveController {
   }
 
   @Get(':id')
+  @UniversalDecorator({
+    summary: "Get Sky Dive by Id",
+    responseType: UpdateSkydiveDto,
+  })
   async findOne(@Param('id') id: string) {
     const skydive = await this.skydiveService.findOne(+id);
     return createResponse(HttpStatus.OK, "Sky Dive fetched successfully", skydive);
   }
 
   @Patch(':id')
+  @UniversalDecorator({
+    role: "ADMIN",
+    summary: "Update Sky Dive",
+    responseType: UpdateSkydiveDto,
+    includeBearerAuth: true
+  })
   async update(@Param('id') id: string, @Body() updateSkydiveDto: UpdateSkydiveDto) {
     const skydive = await this.skydiveService.update(+id, updateSkydiveDto);
     return createResponse(HttpStatus.OK, "Sky Dive updated successfully", skydive);
   }
 
   @Delete(':id')
+  @UniversalDecorator({
+    role: "ADMIN",
+    summary: "Delete Sky Dive",
+    responseType: UpdateSkydiveDto,
+    includeBearerAuth: true
+  })
   async remove(@Param('id') id: string) {
     const skydive = await this.skydiveService.remove(+id);
     return createResponse(HttpStatus.OK, "Sky Dive deleted successfully", skydive);

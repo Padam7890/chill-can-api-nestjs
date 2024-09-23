@@ -22,15 +22,20 @@ async function bootstrap() {
 
 
   const config = new DocumentBuilder() 
-    .setTitle('Soda Can APi Service')
-    .setDescription('Soda Can APi  documentation')
+    .setTitle('Chill Can APi Service')
+    .setDescription('Chill Can APi  documentation')
+    .setExternalDoc('API Documentation', 'docs/')
+    .addSecurityRequirements('JWT-auth')
+    .addServer('http://localhost:3001')
+    .addServer('https://chill-can-api-nestjs.vercel.app/')
+    .setContact('Chill Can', 'https://chill-can-nextjs.vercel.app/', 'info@sodacan.com')
+    .setTermsOfService('/Terms')
     .setVersion('1.0')
     .addBearerAuth({
       type: 'http',
       scheme: 'bearer',
       bearerFormat: 'JWT',
       description: 'JWT Authorization',
-      
       in: 'header',
     }, "JWT-auth")
     .build();
