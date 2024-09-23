@@ -27,7 +27,7 @@ export class SecondHeroSectionController {
 
   @Post()
   @UniversalDecorator({
-    role: 'USER',
+    role: 'ADMIN',
     summary: 'Form Second Hero Section',
     responseType: CreateSecondHeroSectionDto,
     includeBearerAuth: true,
@@ -82,7 +82,7 @@ export class SecondHeroSectionController {
 
   @Patch(':id')
   @UniversalDecorator({
-    role: 'USER',
+    role: 'ADMIN',
     summary: 'Update Form Second Hero Section',
     responseType: CreateSecondHeroSectionDto,
     includeBearerAuth: true,
@@ -112,7 +112,7 @@ export class SecondHeroSectionController {
 
   @Delete(':id')
   @UniversalDecorator({
-    role: 'USER',
+    role: 'ADMIN',
     summary: ' Second Hero Section Delete',
     responseType: CreateSecondHeroSectionDto,
     includeBearerAuth: true,

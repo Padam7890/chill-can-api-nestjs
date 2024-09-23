@@ -27,7 +27,7 @@ export class HeroSectionController {
 
   @Post()
   @UniversalDecorator({
-    role: 'USER',
+    role: 'ADMIN',
     summary: 'Form Hero Section',
     responseType: UpdateHeroSectionDto,
     includeBearerAuth: true,
@@ -94,7 +94,7 @@ export class HeroSectionController {
 
   @Delete(':id')
   @UniversalDecorator({
-    role: 'USER',
+    role: 'ADMIN',
     summary: 'Form Hero Section Delete',
     responseType: CreateHeroSectionDto,
     includeBearerAuth: true,
