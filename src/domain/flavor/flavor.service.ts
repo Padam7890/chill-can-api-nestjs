@@ -7,31 +7,41 @@ import { Flavor } from '@prisma/client';
 @Injectable()
 export class FlavorService {
   constructor(private readonly prisma: DatabaseService) {}
-  create(createFlavorDto: CreateFlavorDto) {
-    return 'This action adds a new flavor';
+  async create(createFlavorDto: CreateFlavorDto) {
+    return await this.prisma.flavor.create({
+      data: createFlavorDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all flavor`;
+  async findAll() {
+    return await this.prisma.flavor.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} flavor`;
+  async findOne(id: number) {
+    return await this.prisma.flavor.findFirst({
+      where: { id },
+    });
   }
 
-  update(id: number, updateFlavorDto: UpdateFlavorDto) {
-    return `This action updates a #${id} flavor`;
+  async update(id: number, updateFlavorDto: UpdateFlavorDto) {
+    return await this.prisma.flavor.update({
+      where: { id },
+      data: updateFlavorDto,
+    });
   }
+  
 
-  remove(id: number) {
-    return `This action removes a #${id} flavor`;
+  async remove(id: number) {
+    return await this.prisma.flavor.delete({
+      where: { id },
+    });
   }
 
   async checkFlavor(flavorName: string): Promise<Flavor | null> {
     return await this.prisma.flavor.findFirst({
       where: {
         flavorName: flavorName,
-      }
+      },
     });
-}
+  }
 }
