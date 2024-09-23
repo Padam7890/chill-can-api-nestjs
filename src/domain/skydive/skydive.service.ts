@@ -1,8 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSkydiveDto } from './dto/create-skydive.dto';
 import { UpdateSkydiveDto } from './dto/update-skydive.dto';
-import { DatabaseService } from 'src/database/database.service';
-import { Flavor } from '@prisma/client';
+import { DatabaseService } from '../../database/database.service';
 import { FlavorService } from '../flavor/flavor.service';
 
 @Injectable()

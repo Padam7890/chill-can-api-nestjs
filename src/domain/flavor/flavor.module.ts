@@ -9,5 +9,6 @@ import { AuthModule } from '../auth/auth.module';
   imports: [DatabaseModule, UserModule, AuthModule],
   controllers: [FlavorController],
   providers: [FlavorService],
+  exports: [FlavorService],
 })
 export class FlavorModule {}
