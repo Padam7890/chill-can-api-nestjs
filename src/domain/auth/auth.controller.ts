@@ -86,4 +86,14 @@ export class AuthController {
     console.log(response)
     res.redirect(`http://localhost:5173?accesstoken=${response.refresh_token}?refreshtoken= ${response.refresh_token}`)
   }
+  @Post("forget-password")
+  @UniversalDecorator({
+    role: "ADMIN",
+    summary: 'Forget Password',
+    responseType: CreateUserDto,
+    includeBearerAuth: true,
+  })
+  async forgetPassword(@Body() email: string){
+    return this.authService.forgetPassword(email)
+  }
 }
