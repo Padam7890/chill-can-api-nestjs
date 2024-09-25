@@ -14,8 +14,8 @@ import jwtConfig from '../../core/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { MailService } from 'src/common/service/mail/mail.service';
 import path, { join } from 'path';
-import fs from 'fs';
 import ejs, { renderFile } from 'ejs';
+import { resetPasswordDTO } from './dto/auth';
 
 @Injectable()
 export class AuthService {
@@ -109,7 +109,6 @@ export class AuthService {
       { getUserName: user.name, resetUrl: resetUrl }, // Data to be injected into the template
     );
 
-    
     try {
       const SendMail = await this.mailService.sendEmail(
         user.email,
@@ -117,12 +116,18 @@ export class AuthService {
         html,
       );
       console.log(SendMail);
-      return {
-        message: 'Email sent successfully',
-      };
+      return SendMail;
     } catch (error) {
       console.log(error);
       throw new Error('Failed to send email');
     }
+  }
+  
+  async resetPassword(resetPasswordDTO: resetPasswordDTO) {
+    const updatePassword = await this.userService.updatePassword(
+      resetPasswordDTO.token,
+      resetPasswordDTO.password,
+    );
+    return updatePassword;
   }
 }

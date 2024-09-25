@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -110,4 +111,36 @@ export class UserService {
       throw new BadRequestException('Failed to generate reset token');
     }
   }
+  async findByToken (hashedToken: string) {
+    const getUser= await this.prisma.user.findFirst({
+      where: { 
+        passwordResetToken: hashedToken,
+        passwordResetTokenExpire: {
+          gt: new Date(),
+        },
+      },
+    });
+    if (!getUser) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+    return getUser;
+  }
+
+  async updatePassword(token: string, newPassword: string): Promise<User> {
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+    const user = await this.findByToken(hashedToken);
+    if (!user) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+    const newPasswordHash = await hashPassword(newPassword);
+    return await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: newPasswordHash,
+        passwordResetToken: null,
+        passwordResetTokenExpire: null,
+      },
+    }); 
+  }
+
 }

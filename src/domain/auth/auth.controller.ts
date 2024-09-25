@@ -12,11 +12,12 @@ import {
 import { AuthService } from './auth.service';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { forgetPasswordDTO, signInDTO } from './dto/auth';
+import { forgetPasswordDTO, resetPasswordDTO, signInDTO } from './dto/auth';
 import { UniversalDecorator } from '../../common/decorators/universal.decorator';
 import { RefreshAuthGuard } from '../../core/guards/refresh-auth.guard';
 import { GoogleAuthGuard } from '../../core/guards/googleauth.guard';
 import { LocalAuthGuard } from '../../core/guards/local-auth.guard';
+import { createResponse } from 'src/helper/response.helper';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -94,7 +95,19 @@ export class AuthController {
     includeBearerAuth: true,
   })
   async forgetPassword(@Body() forgetPasswordDTO: forgetPasswordDTO){
-    return this.authService.forgetPassword(forgetPasswordDTO.email)
+  const response = await this.authService.forgetPassword(forgetPasswordDTO.email)
+  return createResponse(HttpStatus.OK, "Email sent successfully", response)
   }
-  
+
+  @Post("reset-password")
+  @UniversalDecorator({
+    role: "ADMIN",
+    summary: 'Reset Password',
+    responseType: resetPasswordDTO,
+    includeBearerAuth: true,
+  })
+  async resetPassword(@Body() resetPasswordDTO: resetPasswordDTO){
+    const response = await this.authService.resetPassword(resetPasswordDTO)
+    return createResponse(HttpStatus.OK, "Password reset successfully", response)
+  }
 }

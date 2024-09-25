@@ -20,3 +20,15 @@ export class forgetPasswordDTO{
     @ApiProperty()
     email: string;
 }
+
+export class resetPasswordDTO{
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    password: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    token: string;
+}
