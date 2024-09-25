@@ -6,10 +6,11 @@ import { UserModule } from "./user/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { SkydiveModule } from './skydive/skydive.module';
 import { FlavorModule } from './flavor/flavor.module';
+import { MailModule } from "./../common/service/mail/mail.module";
 
 
 @Module({
-  imports: [HeroSectionModule, SecondHeroSectionModule, UserModule, AuthModule, SkydiveModule, FlavorModule],
+  imports: [HeroSectionModule, SecondHeroSectionModule, UserModule, AuthModule, SkydiveModule, FlavorModule, MailModule],
   controllers: [],
   providers: [],
 })

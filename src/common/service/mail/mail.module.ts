@@ -11,20 +11,19 @@ import mailConfig from 'src/core/config/mail.config';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         transport: {
-          host: config.get('MAIL_HOST'),
-          port: config.get('MAIL_PORT'),
+          host: process.env.EMAIL_HOST,
+          port: 587,
           secure: false,
           auth: {
-            user: config.get('MAIL_USER'),
-            pass: config.get('MAIL_PASSWORD'),
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD,
           },
         },
         defaults: {
-          from: config.get('MAIL_FROM'),
+          from: process.env.EMAIL_FROM,
         },
       }),
     }),
-    
   ],
   providers: [MailService],
   exports: [MailService],

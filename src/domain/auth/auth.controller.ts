@@ -96,4 +96,5 @@ export class AuthController {
   async forgetPassword(@Body() forgetPasswordDTO: forgetPasswordDTO){
     return this.authService.forgetPassword(forgetPasswordDTO.email)
   }
+  
 }

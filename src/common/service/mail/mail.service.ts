@@ -3,17 +3,17 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class MailService {
-  constructor(
-    private readonly mailerService: MailerService
-    
-) {}
+  constructor(private readonly mailerService: MailerService) {}
 
-  async sendEmail(to: string, subject: string, text: string): Promise<void> {
-    await this.mailerService.sendMail({
-      to,
-      subject,
-      text,
-    });
+  async sendEmail(to: string, subject: string, html: string): Promise<void> {
+    try {
+      await this.mailerService.sendMail({
+        to,
+        subject,
+        html,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
-
 }

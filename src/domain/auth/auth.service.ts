@@ -13,9 +13,9 @@ import refreshJwtConfig from '../../core/config/refresh-jwt-config';
 import jwtConfig from '../../core/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { MailService } from 'src/common/service/mail/mail.service';
-import path from 'path';
+import path, { join } from 'path';
 import fs from 'fs';
-import ejs from 'ejs';
+import ejs, { renderFile } from 'ejs';
 
 @Injectable()
 export class AuthService {
@@ -100,20 +100,19 @@ export class AuthService {
     const user = await this.userService.findByEmail(email);
     if (!user) throw new UnauthorizedException('User not found!');
     const resetToken = await this.userService.resetPasswordToken(user.id);
+    console.log('token' + resetToken.passwordResetToken);
     const url = process.env.FRONTEND_URL;
     const resetUrl = `${url}/reset-password?token=${resetToken.passwordResetToken}`;
 
-    const emailTemplate = fs.readFileSync(
-      path.join(__dirname, 'views/forget-password.ejs'),
-      'utf-8',
+    const html = await renderFile(
+      join(__dirname, '..', '..', 'views', 'forget-password.ejs'), // Adjust path to the views folder inside src
+      { getUserName: user.name, resetUrl: resetUrl }, // Data to be injected into the template
     );
-    const html = ejs.render(emailTemplate, {
-      getUserName: user.name,
-      resetUrl: resetUrl,
-    });
+
+    
     try {
       const SendMail = await this.mailService.sendEmail(
-        email,
+        user.email,
         'Reset Password',
         html,
       );
@@ -125,6 +124,5 @@ export class AuthService {
       console.log(error);
       throw new Error('Failed to send email');
     }
-
   }
 }

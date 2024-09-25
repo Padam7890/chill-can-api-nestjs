@@ -9,10 +9,12 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
+ 
+  app.setViewEngine('ejs');
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  app.setViewEngine('ejs');
+
+  app.setBaseViewsDir(join(__dirname, 'views'));
 
   app.setGlobalPrefix('api/v1');
 
