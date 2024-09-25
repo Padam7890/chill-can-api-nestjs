@@ -8,6 +8,8 @@ import { join } from 'path';
 import { CloudinaryModule } from './lib/cloudinary/cloudinary.module';
 import { CloudinaryService } from './lib/cloudinary/cloudinary.service';
 import { DomainModule } from './domain/domain.module';
+import { MailService } from './common/service/mail/mail.service';
+import { MailModule } from './common/service/mail/mail.module';
 
 @Module({
   imports: [
@@ -18,8 +20,9 @@ import { DomainModule } from './domain/domain.module';
     }),
     DomainModule,
     CloudinaryModule,
+    MailModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CloudinaryService],
+  providers: [AppService, CloudinaryService, MailService],
 })
 export class AppModule {}

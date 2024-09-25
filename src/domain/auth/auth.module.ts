@@ -12,6 +12,7 @@ import { JwtStrategy } from '../../core/startegies/jwt.startegy';
 import googleOauthConfig from '../../core/config/google-oauth.config';
 import { GoogleStartegy } from '../../core/startegies/google.startegy';
 import { LocalStrategy } from '../../core/startegies/local.startegy';
+import { MailModule } from '../../common/service/mail/mail.module';
 
 
 @Module({
@@ -20,7 +21,8 @@ import { LocalStrategy } from '../../core/startegies/local.startegy';
     JwtModule.registerAsync(jwtConfig.asProvider()), 
     ConfigModule.forFeature(jwtConfig), 
     ConfigModule.forFeature(refreshJwtConfig), 
-    ConfigModule.forFeature(googleOauthConfig)
+    ConfigModule.forFeature(googleOauthConfig),
+    MailModule
 
   ],
   exports: [AuthService, JwtModule], 

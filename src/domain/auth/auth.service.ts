@@ -12,6 +12,10 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import refreshJwtConfig from '../../core/config/refresh-jwt-config';
 import jwtConfig from '../../core/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
+import { MailService } from 'src/common/service/mail/mail.service';
+import path from 'path';
+import fs from 'fs';
+import ejs from 'ejs';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +26,7 @@ export class AuthService {
     private refreshTokenConfig: ConfigType<typeof refreshJwtConfig>,
     @Inject(jwtConfig.KEY)
     private accessTokenConfig: ConfigType<typeof jwtConfig>,
+    private mailService: MailService,
   ) {}
 
   async signUp(data: CreateUserDto): Promise<any> {
@@ -97,7 +102,29 @@ export class AuthService {
     const resetToken = await this.userService.resetPasswordToken(user.id);
     const url = process.env.FRONTEND_URL;
     const resetUrl = `${url}/reset-password?token=${resetToken.passwordResetToken}`;
- 
+
+    const emailTemplate = fs.readFileSync(
+      path.join(__dirname, 'views/forget-password.ejs'),
+      'utf-8',
+    );
+    const html = ejs.render(emailTemplate, {
+      getUserName: user.name,
+      resetUrl: resetUrl,
+    });
+    try {
+      const SendMail = await this.mailService.sendEmail(
+        email,
+        'Reset Password',
+        html,
+      );
+      console.log(SendMail);
+      return {
+        message: 'Email sent successfully',
+      };
+    } catch (error) {
+      console.log(error);
+      throw new Error('Failed to send email');
+    }
 
   }
 }

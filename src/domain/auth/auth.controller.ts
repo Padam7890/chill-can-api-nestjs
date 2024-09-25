@@ -12,7 +12,7 @@ import {
 import { AuthService } from './auth.service';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { signInDTO } from './dto/auth';
+import { forgetPasswordDTO, signInDTO } from './dto/auth';
 import { UniversalDecorator } from '../../common/decorators/universal.decorator';
 import { RefreshAuthGuard } from '../../core/guards/refresh-auth.guard';
 import { GoogleAuthGuard } from '../../core/guards/googleauth.guard';
@@ -90,10 +90,10 @@ export class AuthController {
   @UniversalDecorator({
     role: "ADMIN",
     summary: 'Forget Password',
-    responseType: CreateUserDto,
+    responseType: forgetPasswordDTO,
     includeBearerAuth: true,
   })
-  async forgetPassword(@Body() email: string){
-    return this.authService.forgetPassword(email)
+  async forgetPassword(@Body() forgetPasswordDTO: forgetPasswordDTO){
+    return this.authService.forgetPassword(forgetPasswordDTO.email)
   }
 }

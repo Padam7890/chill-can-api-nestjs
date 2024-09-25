@@ -12,9 +12,11 @@ export class signInDTO{
     @Length(8)
     @ApiProperty()
     password: string;
+}
 
-    
-
-
-
+export class forgetPasswordDTO{
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    email: string;
 }
