@@ -7,10 +7,11 @@ import { AuthModule } from "./auth/auth.module";
 import { SkydiveModule } from './skydive/skydive.module';
 import { FlavorModule } from './flavor/flavor.module';
 import { MailModule } from "./../common/service/mail/mail.module";
+import { AlternatingSectionModule } from './alternating-section/alternating-section.module';
 
 
 @Module({
-  imports: [HeroSectionModule, SecondHeroSectionModule, UserModule, AuthModule, SkydiveModule, FlavorModule, MailModule],
+  imports: [HeroSectionModule, SecondHeroSectionModule, UserModule, AuthModule, SkydiveModule, FlavorModule, MailModule, AlternatingSectionModule],
   controllers: [],
   providers: [],
 })
