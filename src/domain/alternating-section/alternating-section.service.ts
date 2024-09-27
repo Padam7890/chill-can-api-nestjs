@@ -5,15 +5,6 @@ import { DatabaseService } from '../../database/database.service';
 
 @Injectable()
 
-// model AlternatingSection {
-//   id        Int      @id @default(autoincrement())
-//   title     String
-//   content   String
-//   flavor    Flavor   @relation(fields: [flavorId], references: [id])
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   flavorId  Int
-// }
 export class AlternatingSectionService {
   constructor(private readonly prisma: DatabaseService) {}
 
@@ -25,19 +16,30 @@ export class AlternatingSectionService {
     return alternatingSection;
   }
 
-  findAll() {
-    return `This action returns all alternatingSection`;
+  async findAll() {
+    const alternatingSection = await this.prisma.alternatingSection.findMany();
+    return alternatingSection;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} alternatingSection`;
+  async findOne(id: number) {
+    const alternatingSection = await this.prisma.alternatingSection.findUnique({
+      where: { id },
+    });
+    return alternatingSection;
   }
 
-  update(id: number, updateAlternatingSectionDto: UpdateAlternatingSectionDto) {
-    return `This action updates a #${id} alternatingSection`;
+  async update(id: number, updateAlternatingSectionDto: UpdateAlternatingSectionDto) {
+    const alternatingSection = await this.prisma.alternatingSection.update({
+      where: { id },
+      data: updateAlternatingSectionDto,
+    });
+    return alternatingSection;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} alternatingSection`;
+  async remove(id: number) {
+    const alternatingSection = await this.prisma.alternatingSection.delete({
+      where: { id },
+    });
+    return alternatingSection;
   }
 }
