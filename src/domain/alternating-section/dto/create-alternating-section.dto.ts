@@ -10,10 +10,12 @@ export class CreateAlternatingSectionDto {
   @IsNotEmpty()
   title: string;
 
+
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
   content: string;
+  
 
   @ApiProperty()
   @IsNumber()

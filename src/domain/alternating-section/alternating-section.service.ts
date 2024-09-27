@@ -1,11 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAlternatingSectionDto } from './dto/create-alternating-section.dto';
 import { UpdateAlternatingSectionDto } from './dto/update-alternating-section.dto';
+import { DatabaseService } from '../../database/database.service';
 
 @Injectable()
+
+// model AlternatingSection {
+//   id        Int      @id @default(autoincrement())
+//   title     String
+//   content   String
+//   flavor    Flavor   @relation(fields: [flavorId], references: [id])
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   flavorId  Int
+// }
 export class AlternatingSectionService {
-  create(createAlternatingSectionDto: CreateAlternatingSectionDto) {
-    return 'This action adds a new alternatingSection';
+  constructor(private readonly prisma: DatabaseService) {}
+
+  async create(createAlternatingSectionDto: CreateAlternatingSectionDto) {
+    const alternatingSection = await this.prisma.alternatingSection.create({
+      data: createAlternatingSectionDto,
+    });
+
+    return alternatingSection;
   }
 
   findAll() {
