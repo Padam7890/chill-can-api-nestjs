@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFlavorDto } from './dto/create-flavor.dto';
 import { UpdateFlavorDto } from './dto/update-flavor.dto';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../../database/database.service';
 import { Flavor } from '@prisma/client';
 
 @Injectable()

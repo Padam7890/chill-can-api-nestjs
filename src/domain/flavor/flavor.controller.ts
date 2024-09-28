@@ -12,8 +12,8 @@ import { FlavorService } from './flavor.service';
 import { CreateFlavorDto } from './dto/create-flavor.dto';
 import { UpdateFlavorDto } from './dto/update-flavor.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { createResponse } from 'src/helper/response.helper';
-import { UniversalDecorator } from 'src/common/decorators/universal.decorator';
+import { createResponse } from '../../helper/response.helper';
+import { UniversalDecorator } from '../../common/decorators/universal.decorator';
 
 @Controller('flavor')
 @ApiTags('Flavor')

@@ -4,7 +4,7 @@ import { SecondHeroSectionController } from './second-hero-section.controller';
 import { DatabaseModule } from '../../database/database.module';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../../domain/auth/auth.module';
-import { CloudinaryModule } from 'src/lib/cloudinary/cloudinary.module';
+import { CloudinaryModule } from '../../lib/cloudinary/cloudinary.module';
 
 @Module({
   controllers: [SecondHeroSectionController],

@@ -17,7 +17,7 @@ import { UniversalDecorator } from '../../common/decorators/universal.decorator'
 import { RefreshAuthGuard } from '../../core/guards/refresh-auth.guard';
 import { GoogleAuthGuard } from '../../core/guards/googleauth.guard';
 import { LocalAuthGuard } from '../../core/guards/local-auth.guard';
-import { createResponse } from 'src/helper/response.helper';
+import { createResponse } from '../../helper/response.helper';
 
 @Controller('auth')
 @ApiTags('Auth')

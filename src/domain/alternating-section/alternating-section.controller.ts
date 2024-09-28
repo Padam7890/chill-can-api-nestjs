@@ -3,8 +3,8 @@ import { AlternatingSectionService } from './alternating-section.service';
 import { CreateAlternatingSectionDto } from './dto/create-alternating-section.dto';
 import { UpdateAlternatingSectionDto } from './dto/update-alternating-section.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { UniversalDecorator } from 'src/common/decorators/universal.decorator';
-import { createResponse } from 'src/helper/response.helper';
+import { UniversalDecorator } from '../../common/decorators/universal.decorator';
+import { createResponse } from '../../helper/response.helper';
 
 @Controller('alternating-section')
 @ApiTags("Alternating-section")

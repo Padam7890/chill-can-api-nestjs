@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { FlavorName } from 'src/core/interfaces/types';
+import { FlavorName } from '../../../core/interfaces/types';
 
 
 

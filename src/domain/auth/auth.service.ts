@@ -12,7 +12,7 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import refreshJwtConfig from '../../core/config/refresh-jwt-config';
 import jwtConfig from '../../core/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
-import { MailService } from 'src/common/service/mail/mail.service';
+import { MailService } from '../../common/service/mail/mail.service';
 import path, { join } from 'path';
 import ejs, { renderFile } from 'ejs';
 import { resetPasswordDTO } from './dto/auth';
