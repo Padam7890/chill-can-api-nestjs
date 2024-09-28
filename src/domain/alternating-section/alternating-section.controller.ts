@@ -29,22 +29,42 @@ export class AlternatingSectionController {
     summary: "Get all alternating sections",
     responseType: CreateAlternatingSectionDto,
   })
-  findAll() {
-    return this.alternatingSectionService.findAll();
+  async findAll() {
+    const alternatingSections = await this.alternatingSectionService.findAll();
+    return createResponse(HttpStatus.OK, "Alternating sections fetched successfully", alternatingSections);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.alternatingSectionService.findOne(+id);
+  @UniversalDecorator({
+    summary: "Get alternating section by id",
+    responseType: CreateAlternatingSectionDto,
+  })
+  async findOne(@Param('id') id: string) {
+    const alternatingSection = await this.alternatingSectionService.findOne(+id);
+    return createResponse(HttpStatus.OK, "Alternating section fetched successfully", alternatingSection);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAlternatingSectionDto: UpdateAlternatingSectionDto) {
-    return this.alternatingSectionService.update(+id, updateAlternatingSectionDto);
+  @UniversalDecorator({
+    role: "admin",
+    summary: "Update alternating section by id",
+    responseType: CreateAlternatingSectionDto,
+    includeBearerAuth: true,
+  })
+  async update(@Param('id') id: string, @Body() updateAlternatingSectionDto: UpdateAlternatingSectionDto) {
+    const alternatingSection = await this.alternatingSectionService.update(+id, updateAlternatingSectionDto);
+    return createResponse(HttpStatus.OK, "Alternating section updated successfully", alternatingSection);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.alternatingSectionService.remove(+id);
+  @UniversalDecorator({
+    role: "admin",
+    summary: "Delete alternating section by id",
+    responseType: CreateAlternatingSectionDto,
+    includeBearerAuth: true,
+  })
+  async remove(@Param('id') id: string) {
+    const alternatingSection = await this.alternatingSectionService.remove(+id);
+    return createResponse(HttpStatus.OK, "Alternating section deleted successfully", alternatingSection);
   }
 }
