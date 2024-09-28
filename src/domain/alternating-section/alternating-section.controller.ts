@@ -7,7 +7,7 @@ import { UniversalDecorator } from 'src/common/decorators/universal.decorator';
 import { createResponse } from 'src/helper/response.helper';
 
 @Controller('alternating-section')
-@ApiTags("alternating-section")
+@ApiTags("Alternating-section")
 export class AlternatingSectionController {
   constructor(private readonly alternatingSectionService: AlternatingSectionService) {}
 
